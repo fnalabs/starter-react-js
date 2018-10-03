@@ -1,0 +1,118 @@
+{
+  "name": "starter-react-js",
+  "version": "0.0.0",
+  "description": "Starter kit for universal React server-side rendering in Node.js w/ Koa2 implementations in Docker",
+  "main": "./bin/start",
+  "scripts": {
+    "prebuild": "del dist",
+    "build": "NODE_ENV=production webpack",
+    "prebuild:dev": "del dist",
+    "build:dev": "NODE_ENV=development webpack",
+    "coverage": "npm test && codecov",
+    "dev": "nodemon -e js,jsx,json,scss,css -w src -x \"npm run start:dev\" & nodemon -e js -w tst -x \"npm run test:dev\"",
+    "fix": "standard --fix",
+    "prerelease": "del app.tar.gz",
+    "release": "npm test && npm run build && node ./bin/sitemap && node ./bin/compress",
+    "start": "NODE_ENV=production node ./bin/start",
+    "start:dev": "NODE_ENV=development npm run build:dev && node ./bin/start",
+    "pretest": "del coverage",
+    "test": "standard",
+    "posttest": "NODE_ENV=test jest --ci tst/",
+    "pretest:dev": "del coverage",
+    "test:dev": "standard",
+    "posttest:dev": "NODE_ENV=test jest -u tst/",
+    "version": "npm run release && git add --all",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fnalabs/starter-react-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fnalabs/starter-react-js/issues"
+  },
+  "homepage": "https://github.com/fnalabs/starter-react-js#readme",
+  "author": "Adam Eilers",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
+  },
+  "dependencies": {
+    "koa": "~2.5.3",
+    "koa-compress": "~3.0.0",
+    "koa-helmet": "~4.0.0",
+    "koa-logger": "~3.2.0",
+    "koa-static": "~5.0.0",
+    "prop-types": "~15.6.2",
+    "react": "~16.5.2",
+    "react-cookie-consent": "~1.8.0",
+    "react-dom": "~16.5.2",
+    "react-ga": "~2.5.3",
+    "react-helmet": "~5.2.0",
+    "react-router": "~4.3.1",
+    "react-router-dom": "~4.3.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "~7.1.2",
+    "@babel/core": "~7.1.2",
+    "@babel/plugin-proposal-class-properties": "~7.1.0",
+    "@babel/plugin-transform-modules-commonjs": "~7.1.0",
+    "@babel/preset-env": "~7.1.0",
+    "@babel/preset-react": "~7.0.0",
+    "app-module-path": "~2.2.0",
+    "archiver": "~3.0.0",
+    "autoprefixer": "~9.1.5",
+    "babel-core": "~7.0.0-bridge.0",
+    "babel-eslint": "~10.0.1",
+    "babel-jest": "~23.6.0",
+    "babel-loader": "~8.0.4",
+    "babel-plugin-add-module-exports": "~1.0.0",
+    "codecov": "~3.1.0",
+    "css-loader": "~1.0.0",
+    "cssnano": "~4.1.4",
+    "del-cli": "~1.1.0",
+    "dotenv-webpack": "~1.5.7",
+    "enzyme": "~3.6.0",
+    "enzyme-adapter-react-16": "~1.5.0",
+    "file-loader": "~2.0.0",
+    "isomorphic-style-loader": "~4.0.0",
+    "jest": "~23.6.0",
+    "node-sass": "~4.9.3",
+    "nodemon": "~1.18.4",
+    "postcss-loader": "~3.0.0",
+    "react-test-renderer": "~16.5.2",
+    "sass-loader": "~7.1.0",
+    "sitemap": "~2.0.1",
+    "standard": "~12.0.1",
+    "supertest": "~3.3.0",
+    "webpack": "~4.20.2",
+    "webpack-cli": "~3.1.2"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "<rootDir>/coverage/",
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/dist/",
+      "<rootDir>/tst/",
+      "<rootDir>/node_modules/"
+    ],
+    "coverageReporters": [
+      "html",
+      "lcov",
+      "text"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    },
+    "setupTestFrameworkScriptFile": "<rootDir>/tst/configEnzyme.js"
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  }
+}

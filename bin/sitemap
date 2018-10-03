@@ -1,0 +1,29 @@
+#! /usr/bin/env node
+const sm = require('sitemap')
+const fs = require('fs')
+
+const meta = require('../src/assets/metadata.json')
+
+const pathRegex = /^\//
+
+// generate sitemap from metadata
+const sitemapContent = {
+  hostname: meta.common.baseUrl,
+  cacheTime: meta.common.cacheTime,
+  urls: [],
+  xmlNs: 'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"'
+}
+for (let key in meta) {
+  if (pathRegex.test(key)) {
+    sitemapContent.urls.push({
+      url: key,
+      lastmodrealtime: true,
+      lastmodfile: meta.common.lastmodfile,
+      priority: meta[key].priority
+    })
+  }
+}
+const sitemap = sm.createSitemap(sitemapContent)
+
+// write sitemap to client output
+fs.writeFileSync('dist/client/sitemap.xml', sitemap.toString())

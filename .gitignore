@@ -1,7 +1,6 @@
 # Project specific
-.env
 dist
-app.tar.gz
+webapp.tar.gz
 
 # Logs
 logs

@@ -1,4 +1,3 @@
-require('app-module-path').addPath(__dirname)
 const path = require('path')
 
 const Dotenv = require('dotenv-webpack')
@@ -23,6 +22,7 @@ module.exports = [
         {
           test: /\.js.?$/,
           include: /src/,
+          exclude: /node_modules/,
           use: ['babel-loader']
         }
       ]
@@ -31,7 +31,11 @@ module.exports = [
       new Dotenv()
     ],
     resolve: {
-      modules: ['src/client', 'node_modules']
+      modules: [
+        path.resolve(__dirname, 'src/assets'),
+        path.resolve(__dirname, 'src/assets/components'),
+        'node_modules'
+      ]
     },
     devtool: isDev ? 'inline-source-map' : 'nosources-source-map',
     watch: false
@@ -78,7 +82,11 @@ module.exports = [
       ]
     },
     resolve: {
-      modules: ['src/server', 'node_modules']
+      modules: [
+        path.resolve(__dirname, 'src/assets'),
+        path.resolve(__dirname, 'src/assets/components'),
+        'node_modules'
+      ]
     },
     watch: false
   }

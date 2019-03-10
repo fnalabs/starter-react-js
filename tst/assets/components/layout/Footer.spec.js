@@ -3,7 +3,7 @@ import React from 'react'
 import { MemoryRouter } from 'react-router'
 import renderer from 'react-test-renderer'
 
-import { Footer } from '../../../../src/assets/components/layout/Footer.jsx'
+import { Footer } from 'layout'
 
 describe('<Footer />', () => {
   test('should render static content correctly', () => {

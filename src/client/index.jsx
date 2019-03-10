@@ -4,8 +4,8 @@ import { BrowserRouter } from 'react-router-dom'
 
 import Transition from './Transition.jsx'
 
-import { Nav, Footer } from '../assets/components/layout'
-import { Routes } from '../assets/components/Routes.jsx'
+import { Routes } from 'Routes.jsx'
+import { Nav, Footer } from 'layout'
 
 hydrate(
   <BrowserRouter>

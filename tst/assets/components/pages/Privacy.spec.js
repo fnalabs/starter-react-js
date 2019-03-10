@@ -3,7 +3,7 @@ import React from 'react'
 import { MemoryRouter } from 'react-router'
 import renderer from 'react-test-renderer'
 
-import { Privacy } from '../../../../src/assets/components/pages/policies/Privacy.jsx'
+import { Privacy } from 'pages'
 
 jest.mock('react-ga')
 

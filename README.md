@@ -30,7 +30,21 @@ The project provides an extensible build process integrated with npm scripts. Th
 - `npm run test:dev` - to run JS Standard Style checks and development unit tests
 
 ## Docker
-Coming soon!
+As mentioned previously, I have included full Docker support for development and production environments.
+
+For development, it is strongly recommended to use `docker-compose` with the included [docker-compose.yml](./docker-compose.yml) file to achieve this. It provides a sandboxed evironment for development that is consistent throughout the whole life cycle of the application. Below is a summary of useful `docker-compose` CLI commands.
+- `docker-compose build` to build the development image.
+- `docker-compose up [--build]` to (re)create/start and optionally build the development container.
+- `docker-compose restart` to restart ...
+- `docker-compose stop` to stop ...
+- `docker-compose rm` to delete ...
+- `docker-compose down` to stop and remove ...
+
+For production, builds are a multi-step process that is easily automated. Below is a short script to achieve this goal.
+```
+npm run release
+docker build -t fnalabs/docker-webapp .
+```
 
 [LICENSE](./LICENSE)
 

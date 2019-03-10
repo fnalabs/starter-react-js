@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { Nav, Footer } from '../assets/components/layout'
-import { Routes } from '../assets/components/Routes.jsx'
+import { Routes } from 'Routes.jsx'
+import { Nav, Footer } from 'layout'
 
-import styles from '../assets/styles/main.scss'
+import styles from 'styles/main.scss'
 
 export const Layout = () => (
   <html>

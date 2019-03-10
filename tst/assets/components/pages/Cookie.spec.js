@@ -3,7 +3,7 @@ import React from 'react'
 import { MemoryRouter } from 'react-router'
 import renderer from 'react-test-renderer'
 
-import { Cookie } from '../../../../src/assets/components/pages/policies/Cookie.jsx'
+import { Cookie } from 'pages'
 
 jest.mock('react-ga')
 

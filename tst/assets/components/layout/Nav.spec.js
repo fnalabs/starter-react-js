@@ -3,7 +3,7 @@ import React from 'react'
 import { MemoryRouter } from 'react-router'
 import renderer from 'react-test-renderer'
 
-import { Nav } from '../../../../src/assets/components/layout/Nav.jsx'
+import { Nav } from 'layout'
 
 describe('<Nav />', () => {
   test('should render homepage nav correctly', () => {

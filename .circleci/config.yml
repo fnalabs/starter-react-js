@@ -68,9 +68,9 @@ jobs:
       - save_cache:
           key: assets-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
-            - ~/starter-react-js/app.tar.gz
+            - ~/starter-react-js/webapp.tar.gz
       - store_artifacts:
-          path: ~/starter-react-js/app.tar.gz
+          path: ~/starter-react-js/webapp.tar.gz
 
 workflows:
   version: 2

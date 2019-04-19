@@ -35,7 +35,8 @@ module.exports = [
         path.resolve(__dirname, 'src/assets'),
         path.resolve(__dirname, 'src/assets/components'),
         'node_modules'
-      ]
+      ],
+      extensions: ['.jsx', '.js', '.json']
     },
     devtool: isDev ? 'inline-source-map' : 'nosources-source-map',
     watch: false
@@ -86,7 +87,8 @@ module.exports = [
         path.resolve(__dirname, 'src/assets'),
         path.resolve(__dirname, 'src/assets/components'),
         'node_modules'
-      ]
+      ],
+      extensions: ['.jsx', '.js', '.json']
     },
     watch: false
   }

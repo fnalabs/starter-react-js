@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { OutboundLink } from 'react-ga'
 
-import { Consumer } from 'contexts/Consent.jsx'
+import { Consumer } from 'contexts/Consent'
 
 export default class AnalyticsLink extends Component {
   static propTypes = {

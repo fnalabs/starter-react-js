@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 import CookieConsent, { Cookies } from 'react-cookie-consent'
 import ReactGA from 'react-ga'
 
-import { Provider } from 'contexts/Consent.jsx'
+import { Provider } from 'contexts/Consent'
 
-import meta from 'metadata.json'
+import meta from 'metadata'
 
 class Transition extends Component {
   constructor (props) {

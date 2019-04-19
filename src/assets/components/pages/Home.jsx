@@ -3,7 +3,7 @@ import Helmet from 'react-helmet'
 import { Cookies } from 'react-cookie-consent'
 import ReactGA from 'react-ga'
 
-import meta from 'metadata.json'
+import meta from 'metadata'
 
 export default class Home extends Component {
   componentDidMount () {

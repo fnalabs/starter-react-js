@@ -19,7 +19,7 @@ exports[`<Footer /> should render static content correctly 1`] = `
     </h5>
     <div>
       <a
-        href="/cookie"
+        href="/cookie/"
         onClick={[Function]}
       >
         Cookie
@@ -27,7 +27,7 @@ exports[`<Footer /> should render static content correctly 1`] = `
     </div>
     <div>
       <a
-        href="/privacy"
+        href="/privacy/"
         onClick={[Function]}
       >
         Privacy

@@ -2,10 +2,10 @@ import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import Helmet from 'react-helmet'
 
-import meta from 'metadata.json'
+import meta from 'metadata'
 
 export const Privacy = () => {
-  const { title, url } = meta['/privacy']
+  const { title, url } = meta['/privacy/']
   const siteName = meta.common.siteName
 
   return (

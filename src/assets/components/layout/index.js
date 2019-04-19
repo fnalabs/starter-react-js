@@ -1,2 +1,2 @@
-export { Nav } from './Nav.jsx'
-export { Footer } from './Footer.jsx'
+export { Nav } from './Nav'
+export { Footer } from './Footer'

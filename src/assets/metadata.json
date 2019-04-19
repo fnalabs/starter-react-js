@@ -7,14 +7,14 @@
     "url": "https://example.com/",
     "priority": 1.0
   },
-  "/cookie": {
+  "/cookie/": {
     "title": "Cookie Policy",
-    "url": "https://example.com/cookie",
+    "url": "https://example.com/cookie/",
     "priority": 0.0
   },
-  "/privacy": {
+  "/privacy/": {
     "title": "Privacy Policy",
-    "url": "https://example.com/privacy",
+    "url": "https://example.com/privacy/",
     "priority": 0.0
   }
 }

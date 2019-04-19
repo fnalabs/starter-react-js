@@ -7,8 +7,8 @@ export const Footer = () => (
       <h5>Sitemap</h5>
       <div><Link to='/'>Home</Link></div>
       <h5>Policies</h5>
-      <div><Link to='/cookie'>Cookie</Link></div>
-      <div><Link to='/privacy'>Privacy</Link></div>
+      <div><Link to='/cookie/'>Cookie</Link></div>
+      <div><Link to='/privacy/'>Privacy</Link></div>
     </nav>
   </footer>
 )

@@ -2,9 +2,9 @@ import React from 'react'
 import { hydrate } from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 
-import Transition from './Transition.jsx'
+import Transition from './Transition'
 
-import { Routes } from 'Routes.jsx'
+import { Routes } from 'Routes'
 import { Nav, Footer } from 'layout'
 
 hydrate(

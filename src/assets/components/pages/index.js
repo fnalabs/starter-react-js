@@ -1,6 +1,6 @@
 // site's main pages
-export { default as Home } from './Home.jsx'
+export { default as Home } from './Home'
 
 // policy pages
-export { Cookie } from './policies/Cookie.jsx'
-export { Privacy } from './policies/Privacy.jsx'
+export { Cookie } from './policies/Cookie'
+export { Privacy } from './policies/Privacy'

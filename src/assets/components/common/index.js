@@ -1,1 +1,1 @@
-export { default as AnalyticsLink } from './AnalyticsLink.jsx'
+export { default as AnalyticsLink } from './AnalyticsLink'

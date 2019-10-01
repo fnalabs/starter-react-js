@@ -3,7 +3,9 @@
 exports[`<Privacy /> should render Privacy Policy static content 1`] = `
 <article>
   <h1>
-    Privacy Policy For \`siteName\`
+    Privacy Policy For \`
+    Example
+    \`
   </h1>
   <p>
     Effective Date: 10/01/2018

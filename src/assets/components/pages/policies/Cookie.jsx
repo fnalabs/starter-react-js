@@ -1,15 +1,15 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import Helmet from 'react-helmet'
 
 import meta from 'metadata'
 
 export const Cookie = () => {
-  const { title, url } = meta['/cookie/']
+  const { title, url } = meta['/cookie']
   const siteName = meta.common.siteName
 
   return (
-    <Fragment>
+    <>
       <Helmet>
         <title>{title} | {siteName}</title>
 
@@ -21,7 +21,7 @@ export const Cookie = () => {
 
       <article>
         {/* TODO: add site/company name and web address here */}
-        <h1>Cookie Policy for `siteName`</h1>
+        <h1>Cookie Policy for `{siteName}`</h1>
         <p>This is the Cookie Policy for <Link to='/'>https://example.com</Link></p>
         {/* /TODO */}
 
@@ -64,6 +64,6 @@ export const Cookie = () => {
           {/* /TODO */}
         </ul>
       </article>
-    </Fragment>
+    </>
   )
 }

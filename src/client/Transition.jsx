@@ -19,7 +19,7 @@ class Transition extends Component {
     ReactGA.initialize(process.env.GA_ID)
   }
 
-  onAccept = () => {
+  handleOnAccept = () => {
     const pageMeta = meta[this.props.location.pathname]
     const title = pageMeta.title
       ? `${pageMeta.title} | ${meta.common.siteName}`
@@ -46,14 +46,14 @@ class Transition extends Component {
         {this.props.children}
 
         {!this.state.isConsent &&
-          <CookieConsent disableStyles
+          <CookieConsent
+            disableStyles
             buttonText='I Accept'
             contentClasses='is-inline-block'
-            onAccept={this.onAccept}
+            onAccept={this.handleOnAccept}
           >
             We use cookies to provide you the best experience. By clicking <strong>I Accept</strong> you are agreeing to our <Link to='/cookie'>Cookie</Link> and <Link to='/privacy'>Privacy</Link> Policies.
-          </CookieConsent>
-        }
+          </CookieConsent>}
       </Provider>
     )
   }

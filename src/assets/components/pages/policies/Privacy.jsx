@@ -1,15 +1,15 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import Helmet from 'react-helmet'
 
 import meta from 'metadata'
 
 export const Privacy = () => {
-  const { title, url } = meta['/privacy/']
+  const { title, url } = meta['/privacy']
   const siteName = meta.common.siteName
 
   return (
-    <Fragment>
+    <>
       <Helmet>
         <title>{title} | {siteName}</title>
 
@@ -21,9 +21,8 @@ export const Privacy = () => {
 
       <article>
         {/* TODO: add site/company name, web address, and contact emails below */}
-        <h1>Privacy Policy For `siteName`</h1>
-        <p>Effective Date: 10/01/2018<br />
-          Applicable To <Link to='/'>https://example.com</Link></p>
+        <h1>Privacy Policy For `{siteName}`</h1>
+        <p>Effective Date: 10/01/2018<br />Applicable To <Link to='/'>https://example.com</Link></p>
 
         <p><strong>Article 1 - DEFINITIONS</strong>:</p>
         <ol>
@@ -63,8 +62,7 @@ export const Privacy = () => {
         <ul>
           <li><p>Google Analytics</p></li>
         </ul>
-        <p>*You may choose to Opt-out of Google Analytics at any time by clicking the link below and then following further instructions.<br />
-          <a href='https://tools.google.com/dlpage/gaoptout'>Google Analytics Opt-out Browser Add-on</a></p>
+        <p>*You may choose to Opt-out of Google Analytics at any time by clicking the link below and then following further instructions.<br /><a href='https://tools.google.com/dlpage/gaoptout'>Google Analytics Opt-out Browser Add-on</a></p>
 
         <p><strong>Article 7 - HOW INFORMATION IS USED</strong>:</p>
         <p>We primarily use Your Personal Information to help Us provide a better experience for you on Our Website and to provide You the services and/or information You may have requested, such as use of Our Website.</p>
@@ -102,6 +100,6 @@ export const Privacy = () => {
         <p>If You have any questions about this Privacy Policy or the way We collect information from You, or if You would like to launch a complaint about anything related to this Privacy Policy, You may contact Us at the following email address: <a href='mailto:contact@example.com'>contact@example.com</a>.</p>
         {/* /TODO */}
       </article>
-    </Fragment>
+    </>
   )
 }

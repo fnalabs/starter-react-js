@@ -16,7 +16,7 @@ const sitemapContent = {
 for (let key in meta) {
   if (pathRegex.test(key)) {
     sitemapContent.urls.push({
-      url: key,
+      url: meta[key].url,
       lastmodrealtime: true,
       lastmodfile: meta.common.lastmodfile,
       priority: meta[key].priority

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import Helmet from 'react-helmet'
 import { Cookies } from 'react-cookie-consent'
 import ReactGA from 'react-ga'
@@ -17,7 +17,7 @@ export default class Home extends Component {
     const siteName = meta.common.siteName
 
     return (
-      <Fragment>
+      <>
         <Helmet>
           <title>{siteName}</title>
           <meta name='description' content={description} />
@@ -31,7 +31,7 @@ export default class Home extends Component {
         </Helmet>
 
         <div>Homepage content</div>
-      </Fragment>
+      </>
     )
   }
 }

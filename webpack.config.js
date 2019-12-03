@@ -3,7 +3,7 @@ const path = require('path')
 const autoprefixer = require('autoprefixer')
 const cssnano = require('cssnano')
 const Dotenv = require('dotenv-webpack')
-const ManifestPlugin = require('webpack-manifest-plugin')
+const ManifestPlugin = require('webpack-pwa-manifest')
 const NodemonPlugin = require('nodemon-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 
@@ -61,7 +61,16 @@ module.exports = [
     },
     plugins: [
       new Dotenv(),
-      new ManifestPlugin()
+      new ManifestPlugin({
+        name: 'Example React App',
+        short_name: 'Example',
+        description: 'Starter Kit for React PWAs',
+        orientation: 'any',
+        background_color: '#ffffff',
+        theme_color: '#3367D6',
+        inject: false,
+        fingerprints: false
+      })
     ],
     resolve: {
       modules: [

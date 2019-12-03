@@ -10,6 +10,7 @@ ${title}
 ${meta}
 ${link}
 
+<link rel="manifest" href="/manifest.json">
 <!-- TODO: add favicons -->
 
 </head>

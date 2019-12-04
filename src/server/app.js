@@ -1,4 +1,6 @@
 // imports
+import fs from 'fs'
+
 import Koa from 'koa'
 import compress from 'koa-compress'
 import helmet from 'koa-helmet'
@@ -16,6 +18,14 @@ import { Routes } from 'Routes'
 import { Nav, Footer } from 'layout'
 
 import styles from 'styles/main.scss'
+
+// define manifest and client side scripts
+const manifestRegExp = /^manifest/
+const webpackManifest = JSON.parse(fs.readFileSync('./dist/server/manifest.json'))
+
+let manifest = ''
+for (const key in webpackManifest) if (manifestRegExp.test(key)) manifest += `<link rel="manifest" href="/${webpackManifest[key]}">`
+const scripts = `<script src='/${webpackManifest['main.js']}' async></script>`
 
 // init app
 const app = new Koa()
@@ -41,7 +51,7 @@ async function render (ctx) {
   }
 
   ctx.status = context.status || 200
-  ctx.body = template`${helmet.title.toString()}${helmet.meta.toString()}${helmet.link.toString()}${html}`
+  ctx.body = template`${helmet.title.toString()}${helmet.meta.toString()}${helmet.link.toString()}${manifest}${html}${scripts}`
   return ctx
 }
 

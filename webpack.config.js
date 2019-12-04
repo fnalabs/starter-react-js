@@ -3,8 +3,9 @@ const path = require('path')
 const autoprefixer = require('autoprefixer')
 const cssnano = require('cssnano')
 const Dotenv = require('dotenv-webpack')
-const ManifestPlugin = require('webpack-pwa-manifest')
+const ManifestPlugin = require('webpack-manifest-plugin')
 const NodemonPlugin = require('nodemon-webpack-plugin')
+const PWAManifestPlugin = require('webpack-pwa-manifest')
 const TerserPlugin = require('terser-webpack-plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
@@ -23,7 +24,7 @@ module.exports = [
     mode: process.env.NODE_ENV,
     entry: './src/client/index.jsx',
     output: {
-      filename: '[name].js',
+      filename: '[name].[contenthash:8].js',
       path: path.resolve(__dirname, 'dist/client'),
       pathinfo: false,
       publicPath: ''
@@ -62,14 +63,16 @@ module.exports = [
     plugins: [
       new Dotenv(),
       new ManifestPlugin({
+        fileName: '../server/manifest.json'
+      }),
+      new PWAManifestPlugin({
         name: 'Example React App',
         short_name: 'Example',
         description: 'Starter Kit for React PWAs',
         orientation: 'any',
         background_color: '#ffffff',
         theme_color: '#3367D6',
-        inject: false,
-        fingerprints: false
+        inject: false
       })
     ],
     resolve: {
@@ -155,7 +158,9 @@ module.exports = [
     },
     plugins: [
       new NodemonPlugin({
-        script: './bin/start'
+        ext: 'js,json',
+        script: './bin/start',
+        watch: path.resolve('./dist')
       })
     ],
     resolve: {

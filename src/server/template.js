@@ -1,4 +1,4 @@
-export default function template (strings, title, meta, link, content) {
+export default function template (strings, title, meta, link, manifest, content, scripts) {
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -9,16 +9,15 @@ export default function template (strings, title, meta, link, content) {
 ${title}
 ${meta}
 ${link}
+${manifest}
 
-<link rel="manifest" href="/manifest.json">
 <!-- TODO: add favicons -->
 
 </head>
 <body>
 
 ${content}
-
-<script src='/main.js' async></script>
+${scripts}
 
 </body>
 </html>`

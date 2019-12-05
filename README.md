@@ -1,6 +1,5 @@
 # starter(react)<sup>js</sup>
 
-[![Build Status][circle-image]][circle-url]
 [![Code Coverage][codecov-image]][codecov-url]
 [![Dependency Status][depstat-image]][depstat-url]
 [![Dev Dependency Status][devdepstat-image]][devdepstat-url]
@@ -47,9 +46,6 @@ docker build -t fnalabs/docker-webapp .
 ```
 
 [LICENSE](./LICENSE)
-
-[circle-image]: https://img.shields.io/circleci/project/github/fnalabs/starter-react-js.svg
-[circle-url]: https://circleci.com/gh/fnalabs/starter-react-js
 
 [codecov-image]: https://img.shields.io/codecov/c/github/fnalabs/starter-react-js.svg
 [codecov-url]: https://codecov.io/gh/fnalabs/starter-react-js

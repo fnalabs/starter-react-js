@@ -24,7 +24,7 @@ const manifestRegExp = /^manifest/
 const webpackManifest = JSON.parse(fs.readFileSync('./dist/server/manifest.json'))
 
 let manifest = ''
-for (const key in webpackManifest) if (manifestRegExp.test(key)) manifest += `<link rel="manifest" href="/${webpackManifest[key]}">`
+for (const key in webpackManifest) if (manifestRegExp.test(key)) manifest = `<link rel="manifest" href="/${webpackManifest[key]}">`
 const scripts = `<script src='/${webpackManifest['main.js']}' async></script>`
 
 // init app
@@ -61,7 +61,7 @@ export default app
   .use(helmet())
   .use(helmet.referrerPolicy())
   .use(logger())
-  .use(serve('dist/client'))
+  .use(serve('./dist/client'))
   .use(render)
   .on('error', (err, ctx) => {
     console.log('server error', err, ctx)

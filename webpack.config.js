@@ -2,11 +2,14 @@ const path = require('path')
 
 const autoprefixer = require('autoprefixer')
 const cssnano = require('cssnano')
+
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const Dotenv = require('dotenv-webpack')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const NodemonPlugin = require('nodemon-webpack-plugin')
 const PWAManifestPlugin = require('webpack-pwa-manifest')
 const TerserPlugin = require('terser-webpack-plugin')
+const { InjectManifest } = require('workbox-webpack-plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -33,7 +36,7 @@ module.exports = [
     module: {
       rules: [
         {
-          test: /\.js.?$/,
+          test: /\.m?jsx?$/,
           include: /src/,
           exclude: /node_modules/,
           use: 'babel-loader?cacheDirectory'
@@ -44,6 +47,7 @@ module.exports = [
       minimize: true,
       minimizer: [
         new TerserPlugin({
+          test: /\.m?jsx?$/,
           terserOptions: {
             compress: true,
             ie8: false,
@@ -52,7 +56,7 @@ module.exports = [
             mangle: true,
             module: false,
             nameCache: null,
-            safari10: true,
+            safari10: false,
             sourceMap: true,
             topLevel: false,
             warnings: false
@@ -61,6 +65,7 @@ module.exports = [
       ]
     },
     plugins: [
+      new CleanWebpackPlugin(),
       new Dotenv(),
       new ManifestPlugin({
         fileName: '../server/manifest.json'
@@ -73,6 +78,11 @@ module.exports = [
         background_color: '#ffffff',
         theme_color: '#3367D6',
         inject: false
+      }),
+      new InjectManifest({
+        dontCacheBustURLsMatching: /\.\w{8}\./,
+        precacheManifestFilename: 'era-manifest.[manifestHash].js',
+        swSrc: './src/client/sw.js'
       })
     ],
     resolve: {
@@ -81,7 +91,7 @@ module.exports = [
         path.resolve(__dirname, 'src/assets/components'),
         'node_modules'
       ],
-      extensions: ['.jsx', '.js', '.json']
+      extensions: ['.js', '.jsx', '.json', '.mjs']
     },
     devtool: isDev ? 'cheap-module-eval-source-map' : 'nosources-source-map',
     watch: isDev
@@ -140,6 +150,7 @@ module.exports = [
       minimize: true,
       minimizer: [
         new TerserPlugin({
+          test: /\.m?jsx?$/,
           terserOptions: {
             compress: true,
             ie8: false,
@@ -158,9 +169,8 @@ module.exports = [
     },
     plugins: [
       new NodemonPlugin({
-        ext: 'js,json',
         script: './bin/start',
-        watch: path.resolve('./dist')
+        watch: './dist/server'
       })
     ],
     resolve: {
@@ -169,7 +179,7 @@ module.exports = [
         path.resolve(__dirname, 'src/assets/components'),
         'node_modules'
       ],
-      extensions: ['.jsx', '.js', '.json']
+      extensions: ['.js', '.jsx', '.json', '.mjs']
     },
     watch: isDev
   }

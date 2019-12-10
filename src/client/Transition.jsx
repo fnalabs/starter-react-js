@@ -1,3 +1,4 @@
+/* eslint-env browser */
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
@@ -12,11 +13,21 @@ class Transition extends Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      isConsent: Cookies.get('CookieConsent') || false
-    }
+    this.state = { isConsent: this.isConsent }
 
     ReactGA.initialize(process.env.GA_ID)
+    ReactGA.set({ dimension1: 'online' })
+  }
+
+  get isConsent () {
+    return (Cookies.get('CookieConsent') ||
+      localStorage?.getItem('CookieConsent') === 'true') ??
+      false
+  }
+
+  set isConsent (isConsent) {
+    localStorage?.setItem('CookieConsent', String(isConsent)) // eslint-disable-line
+    this.setState({ isConsent })
   }
 
   handleOnAccept = () => {
@@ -26,17 +37,16 @@ class Transition extends Component {
       : meta.common.siteName
 
     ReactGA.pageview(this.props.location.pathname, undefined, title)
-    this.setState({ isConsent: true })
+    this.isConsent = true
   }
 
-  static getDerivedStateFromProps (props, state) {
-    if (Cookies.get('CookieConsent')) return { isConsent: true }
-    else return null
+  handleOnDecline = () => {
+    this.isConsent = false
   }
 
   componentDidUpdate (prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
-      window.scrollTo(0, 0)
+      scrollTo(0, 0)
     }
   }
 
@@ -48,11 +58,14 @@ class Transition extends Component {
         {!this.state.isConsent &&
           <CookieConsent
             disableStyles
-            buttonText='I Accept'
+            enableDeclineButton
+            buttonText='Accept'
+            declineButtonText='Decline'
             contentClasses='is-inline-block'
             onAccept={this.handleOnAccept}
+            onDecline={this.handleOnDecline}
           >
-            We use cookies to provide you the best experience. By clicking <strong>I Accept</strong> you are agreeing to our <Link to='/cookie'>Cookie</Link> and <Link to='/privacy'>Privacy</Link> Policies.
+            We use cookies to provide you the best experience. By clicking <strong>Accept</strong> you are agreeing to our <Link to='/cookie'>Cookie</Link> and <Link to='/privacy'>Privacy</Link> policies.
           </CookieConsent>}
       </Provider>
     )

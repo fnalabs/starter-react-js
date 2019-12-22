@@ -12,20 +12,27 @@ import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import Helmet from 'react-helmet'
 
-import template from './template'
+import meta from 'metadata'
+import template from 'server/template'
 
 import { Routes } from 'Routes'
 import { Nav, Footer } from 'layout'
 
-import styles from 'styles/main.scss'
+// define critical css per page
+const pathRegExp = /^\//
+const styles = {}
+for (var url in meta) {
+  if (pathRegExp.test(url) && fs.existsSync(`./dist/server/css/${meta[url].name}.css`)) {
+    styles[url] = Buffer.from(fs.readFileSync(`./dist/server/css/${meta[url].name}.css`)).toString('utf8')
+  }
+}
 
-// define manifest and client side scripts
-const manifestRegExp = /^manifest/
-const webpackManifest = JSON.parse(fs.readFileSync('./dist/server/manifest.json'))
-
-let manifest = ''
-for (const key in webpackManifest) if (manifestRegExp.test(key)) manifest = `<link rel="manifest" href="/${webpackManifest[key]}">`
-const scripts = `<script src='/${webpackManifest['main.js']}' async></script>`
+// define client side css and js
+const webpackManifest = fs.existsSync('./dist/server/manifest.json')
+  ? JSON.parse(fs.readFileSync('./dist/server/manifest.json'))
+  : {}
+const css = webpackManifest['main.css']
+const js = webpackManifest['main.js']
 
 // init app
 const app = new Koa()
@@ -35,7 +42,6 @@ async function render (ctx) {
   const context = {}
   const html = renderToString(
     <StaticRouter location={ctx.url} context={context}>
-      <style dangerouslySetInnerHTML={{ __html: styles._getCss() }} />
       <div id='main' role='none'>
         <header><Nav /></header>
         <main><Routes /></main>
@@ -51,7 +57,7 @@ async function render (ctx) {
   }
 
   ctx.status = context.status || 200
-  ctx.body = template`${helmet.title.toString()}${helmet.meta.toString()}${helmet.link.toString()}${manifest}${html}${scripts}`
+  ctx.body = template`${helmet.title.toString()}${helmet.meta.toString()}${helmet.link.toString()}${styles[ctx.path]}${css}${html}${js}`
   return ctx
 }
 

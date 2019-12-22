@@ -1,4 +1,4 @@
-export default function template (strings, title, meta, link, manifest, content, scripts) {
+export default function template (_, title, meta, link, style, css, content, js) {
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +9,10 @@ export default function template (strings, title, meta, link, manifest, content,
 ${title}
 ${meta}
 ${link}
-${manifest}
+<link rel="manifest" href="/manifest.json">
+
+<style type="text/css">${style}</style>
+<noscript><link rel="stylesheet" type="text/css" href="/${css}"></noscript>
 
 <!-- TODO: add favicons -->
 
@@ -18,12 +21,14 @@ ${manifest}
 
 ${content}
 
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'))
+<script type="text/javascript">
+// TODO: Replace with link preload solution when support exceeds 90%. https://caniuse.com/#feat=link-rel-preload
+document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend", '<link rel="stylesheet" type="text/css" href="/${css}">')
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js"))
 }
 </script>
-${scripts}
+<script type="application/javascript" src="/${js}" async></script>
 
 </body>
 </html>`

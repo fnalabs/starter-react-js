@@ -1,5 +1,5 @@
 # start with Alpine Linux Node image for development
-FROM node:12.13.1-alpine as development
+FROM node:12.14.0-alpine as development
 
 ARG APP_PATH="/opt/webapp"
 ARG NODE_ENV="development"
@@ -7,7 +7,8 @@ ARG PORT="3000"
 
 # set environment variables
 ENV NODE_ENV="${NODE_ENV}" \
-    PORT="${PORT}"
+    PORT="${PORT}" \
+    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="true"
 
 # Project code
 COPY . ${APP_PATH}/
@@ -22,7 +23,7 @@ RUN apk add --update --no-cache bash-completion && \
 EXPOSE ${PORT}
 
 # start with Alpine Linux Node image for production
-FROM node:12.13.1-alpine as production
+FROM node:12.14.0-alpine as production
 
 ARG APP_PATH="/opt/webapp"
 ARG NODE_ENV="production"

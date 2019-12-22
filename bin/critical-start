@@ -1,0 +1,5 @@
+#! /usr/bin/env node
+require('../dist/server')
+
+// NOTE: you may need to adjust this timeout if you site exceeds more than 10 pages
+setTimeout(() => process.exit(), 5000)

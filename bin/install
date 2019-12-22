@@ -30,6 +30,18 @@ baseInstall () {
     dumb-init \
     grep \
     tree
+
+  if [[ "${NODE_ENV}" == "development" ]]; then
+    printLine "Installing development environment dependencies"
+    apk add --update --no-cache \
+      chromium \
+      nss \
+      freetype \
+      freetype-dev \
+      harfbuzz \
+      ca-certificates \
+      ttf-freefont
+  fi
 }
 
 ###

@@ -6,7 +6,7 @@ import renderer from 'react-test-renderer'
 import { Nav } from 'layout'
 
 describe('<Nav />', () => {
-  test('should render homepage nav correctly', () => {
+  it('should render homepage nav correctly', () => {
     const tree = renderer
       .create(<MemoryRouter initialEntries={['/']}><Nav /></MemoryRouter>)
       .toJSON()
@@ -14,7 +14,7 @@ describe('<Nav />', () => {
     expect(tree).toMatchSnapshot()
   })
 
-  test('should render Cookie Policy page nav correctly', () => {
+  it('should render Cookie Policy page nav correctly', () => {
     const tree = renderer
       .create(<MemoryRouter initialEntries={['/cookie']}><Nav /></MemoryRouter>)
       .toJSON()
@@ -22,7 +22,7 @@ describe('<Nav />', () => {
     expect(tree).toMatchSnapshot()
   })
 
-  test('should render Privacy Policy page nav correctly', () => {
+  it('should render Privacy Policy page nav correctly', () => {
     const tree = renderer
       .create(<MemoryRouter initialEntries={['/privacy']}><Nav /></MemoryRouter>)
       .toJSON()

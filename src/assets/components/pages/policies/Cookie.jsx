@@ -11,7 +11,7 @@ export const Cookie = () => {
   return (
     <>
       <Helmet>
-        <title>{title} | {siteName}</title>
+        <title>{siteName} | {title}</title>
 
         <meta property='og:title' content={`${title} | ${siteName}`} />
         <meta property='og:site_name' content={siteName} />

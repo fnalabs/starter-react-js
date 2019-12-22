@@ -20,13 +20,13 @@ class Transition extends Component {
   }
 
   get isConsent () {
-    return (Cookies.get('CookieConsent') ||
-      localStorage?.getItem('CookieConsent') === 'true') ??
+    return (Cookies.get('CookieConsent') === 'true' ||
+      sessionStorage?.getItem('CookieConsent') === 'true') ??
       false
   }
 
   set isConsent (isConsent) {
-    localStorage?.setItem('CookieConsent', String(isConsent)) // eslint-disable-line
+    sessionStorage?.setItem('CookieConsent', String(isConsent)) // eslint-disable-line
     this.setState({ isConsent })
   }
 
@@ -41,6 +41,7 @@ class Transition extends Component {
   }
 
   handleOnDecline = () => {
+    if (Cookies.get('CookieConsent') === 'true') Cookies.set('CookieConsent', 'false')
     this.isConsent = false
   }
 
@@ -61,7 +62,6 @@ class Transition extends Component {
             enableDeclineButton
             buttonText='Accept'
             declineButtonText='Decline'
-            contentClasses='is-inline-block'
             onAccept={this.handleOnAccept}
             onDecline={this.handleOnDecline}
           >

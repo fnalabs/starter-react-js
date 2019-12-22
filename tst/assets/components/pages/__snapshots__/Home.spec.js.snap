@@ -5,9 +5,3 @@ exports[`<Home /> should render homepage static content 1`] = `
   Homepage content
 </div>
 `;
-
-exports[`<Home /> should render homepage static content and report page view 1`] = `
-<div>
-  Homepage content
-</div>
-`;

@@ -21,10 +21,9 @@ export default class AnalyticsLink extends Component {
 
     return (
       <Consumer>
-        {({ isConsent }) => (
-          isConsent
-            ? <OutboundLink eventLabel={to} to={to} {...attrs}>{children}</OutboundLink>
-            : <a href={to} {...attrs}>{children}</a>
+        {({ isConsent }) => (isConsent
+          ? <OutboundLink eventLabel={to} to={to} {...attrs}>{children}</OutboundLink>
+          : <a href={to} {...attrs}>{children}</a>
         )}
       </Consumer>
     )

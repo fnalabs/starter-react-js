@@ -5,25 +5,25 @@ import { mount, shallow } from 'enzyme'
 import { AnalyticsLink } from 'common'
 
 describe('<AnalyticsLink />', () => {
-  test('should render not consented', () => {
+  it('should render not consented', () => {
     const analyticsLink = mount(<AnalyticsLink to='test'>test</AnalyticsLink>)
 
     expect(analyticsLink.contains(<a href='test'>test</a>)).toBe(true)
   })
 
-  test('should render not consented w/ target', () => {
-    const analyticsLink = mount(<AnalyticsLink to='test' target='_blank'>test</AnalyticsLink>)
+  it('should render not consented w/ target', () => {
+    const analyticsLink = mount(<AnalyticsLink to='test' target='_blank' rel='noopener noreferrer'>test</AnalyticsLink>)
 
-    expect(analyticsLink.contains(<a href='test' target='_blank'>test</a>)).toBe(true)
+    expect(analyticsLink.contains(<a href='test' target='_blank' rel='noopener noreferrer'>test</a>)).toBe(true)
   })
 
-  test('should render not consented w/ custom class', () => {
+  it('should render not consented w/ custom class', () => {
     const analyticsLink = mount(<AnalyticsLink to='test' className='custom'>test</AnalyticsLink>)
 
     expect(analyticsLink.contains(<a href='test' className='custom'>test</a>)).toBe(true)
   })
 
-  test('should render a consented link', () => {
+  it('should render a consented link', () => {
     const analyticsLink = shallow(<AnalyticsLink to='test'>test</AnalyticsLink>)
     const Children = analyticsLink.props().children({ isConsent: true })
     const link = mount(Children)

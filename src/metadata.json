@@ -5,16 +5,19 @@
     "cacheTime": 600000
   },
   "/": {
+    "name": "home",
     "description": "Home",
     "url": "https://example.com",
     "priority": 1.0
   },
   "/cookie": {
+    "name": "cookie",
     "title": "Cookie Policy",
     "url": "https://example.com/cookie",
     "priority": 0.0
   },
   "/privacy": {
+    "name": "privacy",
     "title": "Privacy Policy",
     "url": "https://example.com/privacy",
     "priority": 0.0

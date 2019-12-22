@@ -2,7 +2,7 @@
 const sm = require('sitemap')
 const fs = require('fs')
 
-const meta = require('../src/assets/metadata.json')
+const meta = require('../src/metadata.json')
 
 const pathRegex = /^\//
 
@@ -13,7 +13,7 @@ const sitemapContent = {
   urls: [],
   xmlNs: 'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"'
 }
-for (let key in meta) {
+for (const key in meta) {
   if (pathRegex.test(key)) {
     sitemapContent.urls.push({
       url: meta[key].url,

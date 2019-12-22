@@ -5,10 +5,10 @@
 [![Dev Dependency Status][devdepstat-image]][devdepstat-url]
 [![JavaScript Style Guide][style-image]][style-url]
 
-Starter kit for a universal webapp with React/Koa2.
+Starter kit for a universal PWA with React/Koa2.
 
 ## Overview
-Overall, this starter kit provides the standard boilerplate constructs to develop and build a universal webapp. It uses the latest Babel, Webpack, and Jest/Enzyme. Some opinions have been made revolving around the inclusion of GDPR and GA tracking requirements. It has some configurable project settings with included \*rc/\*ignore files for:
+Overall, this starter kit provides the standard boilerplate constructs to develop and build a universal PWA. It uses the latest Babel, Webpack, and Jest/Enzyme. Some opinions have been made revolving around the inclusion of GDPR and GA tracking requirements. It has some configurable project settings with included \*rc/\*ignore files for:
 - [Babel](https://babeljs.io/) ([.babelrc](./.babelrc) for import/export syntactic sugar and ES8+ support)
 - [Git](https://git-scm.com/) ([.gitignore](./.gitignore), pretty much the standard Node.js one provided by Github)
 - [Docker](https://www.docker.com/) ([.dockerignore](./.dockerignore), pretty much the .gitignore above with a few small changes)
@@ -42,7 +42,7 @@ For development, it is strongly recommended to use `docker-compose` with the inc
 For production, builds are a multi-step process that is easily automated. Below is a short script to achieve this goal.
 ```
 npm run release
-docker build -t fnalabs/docker-webapp .
+docker build -t fnalabs/docker-pwa .
 ```
 
 [LICENSE](./LICENSE)

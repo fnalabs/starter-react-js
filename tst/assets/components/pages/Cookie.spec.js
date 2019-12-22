@@ -8,7 +8,7 @@ import { Cookie } from 'pages'
 jest.mock('react-ga')
 
 describe('<Cookie />', () => {
-  test('should render Cookie Policy static content', () => {
+  it('should render Cookie Policy static content', () => {
     const tree = renderer.create(<MemoryRouter><Cookie location={{ pathname: '/cookie' }} /></MemoryRouter>).toJSON()
 
     expect(tree).toMatchSnapshot()

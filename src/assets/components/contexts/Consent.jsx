@@ -1,3 +1,6 @@
 import React from 'react'
 
-export const { Consumer, Provider } = React.createContext({ isConsent: false })
+const Consent = React.createContext({ isConsent: false })
+
+export const { Consumer, Provider } = Consent
+export default Consent

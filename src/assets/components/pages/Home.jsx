@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
-import { Cookies } from 'react-cookie-consent'
 import ReactGA from 'react-ga'
+
+import Consent from 'contexts/Consent'
 
 import meta from 'metadata'
 
 export default class Home extends Component {
+  static contextType = Consent
+  static contextTypes = {
+    isConsent: PropTypes.bool
+  }
+
   componentDidMount () {
-    if (Cookies.get('CookieConsent')) {
+    if (this.context.isConsent) {
       ReactGA.pageview(this.props.location.pathname, undefined, meta.common.siteName)
     }
   }

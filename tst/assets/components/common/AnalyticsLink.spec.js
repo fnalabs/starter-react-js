@@ -23,6 +23,12 @@ describe('<AnalyticsLink />', () => {
     expect(analyticsLink.contains(<a href='test' className='custom'>test</a>)).toBe(true)
   })
 
+  it('should render not consented w/ ARIA label', () => {
+    const analyticsLink = mount(<AnalyticsLink to='test' aria-label='test'>test</AnalyticsLink>)
+
+    expect(analyticsLink.contains(<a href='test' aria-label='test'>test</a>)).toBe(true)
+  })
+
   it('should render a consented link', () => {
     const analyticsLink = shallow(<AnalyticsLink to='test'>test</AnalyticsLink>)
     const Children = analyticsLink.props().children({ isConsent: true })

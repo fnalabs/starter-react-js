@@ -21,7 +21,7 @@ import { Nav, Footer } from 'layout'
 // define critical css per page
 const pathRegExp = /^\//
 const styles = {}
-for (var url in meta) {
+for (const url in meta) {
   if (pathRegExp.test(url) && fs.existsSync(`./dist/server/css/${meta[url].name}.css`)) {
     styles[url] = Buffer.from(fs.readFileSync(`./dist/server/css/${meta[url].name}.css`)).toString('utf8')
   }

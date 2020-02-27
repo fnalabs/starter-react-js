@@ -9,7 +9,8 @@ export default class AnalyticsLink extends Component {
     to: PropTypes.string.isRequired,
     className: PropTypes.string,
     target: PropTypes.oneOf(['_blank', '_parent', '_top']),
-    rel: PropTypes.string
+    rel: PropTypes.string,
+    'aria-label': PropTypes.string
   }
 
   render () {
@@ -18,6 +19,7 @@ export default class AnalyticsLink extends Component {
     const attrs = target ? { target } : {}
     if (className) attrs.className = className
     if (rel) attrs.rel = rel
+    if (this.props['aria-label']) attrs['aria-label'] = this.props['aria-label']
 
     return (
       <Consumer>

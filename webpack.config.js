@@ -14,19 +14,72 @@ const PWAManifestPlugin = require('webpack-pwa-manifest')
 const TerserPlugin = require('terser-webpack-plugin')
 const WebpackShellPluginNext = require('webpack-shell-plugin-next')
 
+const pkg = require('./package.json')
+
 const isDev = process.env.NODE_ENV === 'development'
+
+// define webapp plugins
+const plugins = [
+  new CleanWebpackPlugin(),
+  new Dotenv(),
+  new MiniCssExtractPlugin({
+    filename: '[name].[contenthash:8].css'
+  })
+]
+if (isDev) {
+  plugins.push(
+    new ManifestPlugin({
+      fileName: '../server/manifest.json'
+    }),
+    new WebpackShellPluginNext({
+      onBuildEnd: {
+        scripts: ['node ./bin/critical-css']
+      },
+      dev: false
+    })
+  )
+} else {
+  plugins.push(
+    new PWAManifestPlugin({
+      name: 'Example React App',
+      short_name: 'Example',
+      description: 'Starter Kit for React PWAs',
+      orientation: 'any',
+      background_color: '#ffffff',
+      theme_color: '#3367D6',
+      prefer_related_applications: false,
+      fingerprints: false,
+      inject: false
+    }),
+    new InjectManifest({
+      dontCacheBustURLsMatching: /\.\w{8}\./,
+      manifestTransforms: [async manifest => {
+        manifest.push(
+          { url: '.', revision: pkg.version },
+          { url: '/cookie', revision: pkg.version },
+          { url: '/privacy', revision: pkg.version }
+        )
+        return { manifest, warnings: [] }
+      }],
+      swSrc: './src/client/sw.js'
+    }),
+    new ManifestPlugin({
+      fileName: '../server/manifest.json'
+    }),
+    new WebpackShellPluginNext({
+      onBuildExit: {
+        scripts: ['node ./bin/critical-start', 'node ./bin/critical-css'],
+        parallel: true
+      }
+    })
+  )
+}
 
 module.exports = [
   // client-side config
   {
     name: '- Web App',
     bail: !isDev,
-    stats: {
-      all: false,
-      assets: true,
-      builtAt: true,
-      timings: true
-    },
     mode: process.env.NODE_ENV,
     entry: './src/client/index.jsx',
     output: {
@@ -57,10 +110,11 @@ module.exports = [
             {
               loader: 'postcss-loader',
               options: {
-                ident: 'postcss',
-                plugins: () => [
-                  autoprefixer()
-                ],
+                postcssOptions: {
+                  plugins: [
+                    autoprefixer
+                  ]
+                },
                 sourceMap: true
               }
             },
@@ -89,7 +143,6 @@ module.exports = [
             nameCache: null,
             safari10: false,
             sourceMap: true,
-            topLevel: false,
             warnings: false
           }
         }),
@@ -101,41 +154,7 @@ module.exports = [
         })
       ]
     },
-    plugins: [
-      new CleanWebpackPlugin(),
-      new Dotenv(),
-      new MiniCssExtractPlugin({
-        filename: '[name].[contenthash:8].css'
-      }),
-      new PWAManifestPlugin({
-        name: 'Example React App',
-        short_name: 'Example',
-        description: 'Starter Kit for React PWAs',
-        orientation: 'any',
-        background_color: '#ffffff',
-        theme_color: '#3367D6',
-        prefer_related_applications: false,
-        fingerprints: false,
-        inject: false
-      }),
-      new InjectManifest({
-        dontCacheBustURLsMatching: /\.\w{8}\./,
-        precacheManifestFilename: 'era-manifest.[manifestHash].js',
-        swSrc: './src/client/sw.js'
-      }),
-      new ManifestPlugin({
-        fileName: '../server/manifest.json'
-      }),
-      new WebpackShellPluginNext(isDev
-        ? { onBuildEnd: { scripts: ['node ./bin/critical-css'] }, dev: false }
-        : {
-          onBuildExit: {
-            scripts: ['node ./bin/critical-start', 'node ./bin/critical-css'],
-            parallel: true
-          }
-        }
-      )
-    ],
+    plugins,
     resolve: {
       modules: [
         path.resolve(__dirname, 'src'),
@@ -145,19 +164,13 @@ module.exports = [
       ],
       extensions: ['.js', '.jsx', '.json', '.mjs']
     },
-    devtool: isDev ? 'cheap-module-eval-source-map' : 'nosources-source-map',
+    devtool: isDev ? 'cheap-source-map' : 'source-map',
     watch: isDev
   },
   // server-side config
   {
     name: '- SSR',
     bail: !isDev,
-    stats: {
-      all: false,
-      assets: true,
-      builtAt: true,
-      timings: true
-    },
     mode: process.env.NODE_ENV,
     entry: './src/server/index.js',
     output: {
@@ -191,7 +204,6 @@ module.exports = [
             nameCache: null,
             safari10: false,
             sourceMap: true,
-            topLevel: false,
             warnings: false
           }
         })

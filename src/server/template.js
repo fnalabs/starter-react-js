@@ -1,6 +1,6 @@
 export default function template (_, title, meta, link, style, css, content, js) {
   return `<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charSet='utf-8' />
 <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
@@ -12,24 +12,14 @@ ${link}
 <link rel="manifest" href="/manifest.json">
 
 <style type="text/css">${style}</style>
-<noscript><link rel="stylesheet" type="text/css" href="/${css}"></noscript>
+<link rel="stylesheet" href="/${css}" media="print" onload="this.media='all';this.onload=null;">
 
 <!-- TODO: add favicons -->
 
 </head>
 <body>
-
 ${content}
-
-<script type="text/javascript">
-// TODO: Replace with link preload solution when support exceeds 90%. https://caniuse.com/#feat=link-rel-preload
-document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend", '<link rel="stylesheet" type="text/css" href="/${css}">')
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js"))
-}
-</script>
 <script type="application/javascript" src="/${js}" async></script>
-
 </body>
 </html>`
 }

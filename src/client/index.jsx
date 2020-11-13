@@ -9,6 +9,10 @@ import { Nav, Footer } from 'layout'
 
 import 'styles/main.scss'
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'))
+}
+
 hydrate(
   <BrowserRouter>
     <Transition>

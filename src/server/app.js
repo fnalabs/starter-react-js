@@ -64,8 +64,31 @@ async function render (ctx) {
 // define middleware and export
 export default app
   .use(compress())
-  .use(helmet())
+  .use(helmet.contentSecurityPolicy({
+    directives: {
+      'default-src': ["'self'"],
+      'base-uri': ["'self'"],
+      'block-all-mixed-content': [],
+      'font-src': ["'self'", 'https:', 'data:'],
+      'frame-ancestors': ["'self'"],
+      'img-src': ["'self'", 'data:'],
+      'object-src': 'none',
+      'script-src': ["'self'", 'https://www.google-analytics.com'],
+      'script-src-attr': ["'unsafe-hashes'", "'sha256-+vYvnfpGYzrQvA2m4s/IuCx421Za0qgoBhmWXrKWqzg='"],
+      'style-src': ["'self'", 'https:', "'unsafe-inline'"],
+      'upgrade-insecure-requests': []
+    }
+  }))
+  .use(helmet.dnsPrefetchControl())
+  .use(helmet.expectCt())
+  .use(helmet.frameguard())
+  .use(helmet.hidePoweredBy())
+  .use(helmet.hsts())
+  .use(helmet.ieNoOpen())
+  .use(helmet.noSniff())
+  .use(helmet.permittedCrossDomainPolicies())
   .use(helmet.referrerPolicy())
+  .use(helmet.xssFilter())
   .use(logger())
   .use(serve('./dist/client'))
   .use(render)

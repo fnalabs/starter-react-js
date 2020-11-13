@@ -1,51 +1,46 @@
 /* eslint-env serviceworker */
-/* global workbox */
-
-// constants
-const urls = [{ url: '.' }, { url: '/cookie' }, { url: '/privacy' }]
-const precacheManifest = !self.__precacheManifest
-  ? urls
-  : self.__precacheManifest.reduce((ret, val) => {
-    if (val.revision) for (const url of urls) url.revision = val.revision
-    ret.push(val)
-    return ret
-  }, urls)
+import { setCacheNameDetails } from 'workbox-core'
+import * as googleAnalytics from 'workbox-google-analytics'
+import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching'
+import { registerRoute } from 'workbox-routing'
+import { CacheFirst } from 'workbox-strategies'
+import { ExpirationPlugin } from 'workbox-expiration'
 
 // event handlers
 self.addEventListener('install', (event) => self.skipWaiting())
 
 // config
-workbox.core.setCacheNameDetails({
+setCacheNameDetails({
   prefix: 'era'
 })
-workbox.googleAnalytics.initialize({
+googleAnalytics.initialize({
   parameterOverrides: {
     cd1: 'offline'
   }
 })
 
 // precache and routing
-workbox.precaching.precacheAndRoute(precacheManifest)
-workbox.precaching.cleanupOutdatedCaches()
+precacheAndRoute(self.__WB_MANIFEST)
+cleanupOutdatedCaches()
 
-workbox.routing.registerRoute(
+registerRoute(
   /.*google-analytics\.com/,
-  new workbox.strategies.CacheFirst({
+  new CacheFirst({
     cacheName: 'analytics',
     plugins: [
-      new workbox.expiration.Plugin({
+      new ExpirationPlugin({
         maxEntries: 60,
         maxAgeSeconds: 2592000 // 30 Days
       })
     ]
   })
 )
-workbox.routing.registerRoute(
+registerRoute(
   /\.(?:png|jpg|jpeg|svg|gif|ico)$/,
-  new workbox.strategies.CacheFirst({
+  new CacheFirst({
     cacheName: 'era-images',
     plugins: [
-      new workbox.expiration.Plugin({
+      new ExpirationPlugin({
         maxEntries: 60,
         maxAgeSeconds: 2592000 // 30 Days
       })

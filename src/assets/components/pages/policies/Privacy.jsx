@@ -1,27 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Helmet from 'react-helmet'
+
+import { Header } from 'layout'
 
 import meta from 'metadata'
 
 export const Privacy = () => {
-  const { title, url } = meta['/privacy']
-  const siteName = meta.common.siteName
+  const { title, description, url } = meta['/privacy']
 
   return (
     <>
-      <Helmet>
-        <title>{siteName} | {title}</title>
-
-        <meta property='og:title' content={`${title} | ${siteName}`} />
-        <meta property='og:site_name' content={siteName} />
-        <meta property='og:url' content={url} />
-        <meta property='og:type' content='website' />
-      </Helmet>
+      <Header title={`${meta.common.siteName} | ${title}`} description={description} url={url} />
 
       <article>
         {/* TODO: add site/company name, web address, and contact emails below */}
-        <h1>Privacy Policy For `{siteName}`</h1>
+        <h1>Privacy Policy For `{meta.common.siteName}`</h1>
         <p>Effective Date: 10/01/2018<br />Applicable To <Link to='/'>https://example.com</Link></p>
 
         <p><strong>Article 1 - DEFINITIONS</strong>:</p>

@@ -2,6 +2,7 @@
   "common": {
     "siteName": "Example",
     "baseUrl": "https://example.com",
+    "imageUrl": "https://example.com/icon.png",
     "cacheTime": 600000
   },
   "/": {
@@ -13,12 +14,14 @@
   "/cookie": {
     "name": "cookie",
     "title": "Cookie Policy",
+    "description": "Cookie policy for the website",
     "url": "https://example.com/cookie",
     "priority": 0.0
   },
   "/privacy": {
     "name": "privacy",
     "title": "Privacy Policy",
+    "description": "Privacy policy for the website",
     "url": "https://example.com/privacy",
     "priority": 0.0
   }

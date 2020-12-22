@@ -1,27 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Helmet from 'react-helmet'
+
+import { Header } from 'layout'
 
 import meta from 'metadata'
 
 export const Cookie = () => {
-  const { title, url } = meta['/cookie']
-  const siteName = meta.common.siteName
+  const { title, description, url } = meta['/cookie']
 
   return (
     <>
-      <Helmet>
-        <title>{siteName} | {title}</title>
-
-        <meta property='og:title' content={`${title} | ${siteName}`} />
-        <meta property='og:site_name' content={siteName} />
-        <meta property='og:url' content={url} />
-        <meta property='og:type' content='website' />
-      </Helmet>
+      <Header title={`${meta.common.siteName} | ${title}`} description={description} url={url} />
 
       <article>
         {/* TODO: add site/company name and web address here */}
-        <h1>Cookie Policy for `{siteName}`</h1>
+        <h1>Cookie Policy for `{meta.common.siteName}`</h1>
         <p>This is the Cookie Policy for <Link to='/'>https://example.com</Link></p>
         {/* /TODO */}
 

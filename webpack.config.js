@@ -6,7 +6,7 @@ const cssnano = require('cssnano')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const Dotenv = require('dotenv-webpack')
 const { InjectManifest } = require('workbox-webpack-plugin')
-const ManifestPlugin = require('webpack-manifest-plugin')
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const NodemonPlugin = require('nodemon-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
@@ -28,7 +28,7 @@ const plugins = [
 ]
 if (isDev) {
   plugins.push(
-    new ManifestPlugin({
+    new WebpackManifestPlugin({
       fileName: '../server/manifest.json'
     }),
     new WebpackShellPluginNext({
@@ -63,7 +63,7 @@ if (isDev) {
       }],
       swSrc: './src/client/sw.js'
     }),
-    new ManifestPlugin({
+    new WebpackManifestPlugin({
       fileName: '../server/manifest.json'
     }),
     new WebpackShellPluginNext({

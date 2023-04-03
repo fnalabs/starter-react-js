@@ -9,7 +9,7 @@ import { Provider } from '../contexts/Consent'
 import meta from '../../metadata'
 
 if (typeof process.env.NEXT_PUBLIC_GA_ID !== 'undefined') {
-  ReactGA.initialize(process.env.NEXT_PUBLIC_GA_ID as string)
+  ReactGA.initialize(process.env.NEXT_PUBLIC_GA_ID)
   ReactGA.set({ dimension1: 'online' })
 }
 

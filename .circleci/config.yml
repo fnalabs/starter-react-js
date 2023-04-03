@@ -1,9 +1,11 @@
-version: 2.0
+version: 2.1
+orbs:
+  codecov: codecov/codecov@3.2.4
 
 jobs:
   checkout_code:
     docker:
-      - image: circleci/node:14.16.0
+      - image: cimg/node:18.14.0
     working_directory: ~/starter-react-js
     steps:
       - checkout
@@ -14,7 +16,7 @@ jobs:
 
   install_dependencies:
     docker:
-      - image: circleci/node:14.16.0
+      - image: cimg/node:18.14.0
     working_directory: ~/starter-react-js
     steps:
       - restore_cache:
@@ -28,7 +30,7 @@ jobs:
 
   test:
     docker:
-      - image: circleci/node:14.16.0
+      - image: cimg/node:18.14.0
     working_directory: ~/starter-react-js
     steps:
       - restore_cache:
@@ -38,11 +40,11 @@ jobs:
           keys:
             - dependencies-{{ .Branch }}-{{ checksum "package.json" }}
       - run:
-          name: Run lint and unit tests
-          command: npm test
+          name: Run lint tests
+          command: npm run lint
       - run:
-          name: Run coverage report
-          command: npm run coverage
+          name: Run unit tests
+          command: npm test
       - store_test_results:
           path: ~/starter-react-js/coverage.lcov
       - store_artifacts:
@@ -50,7 +52,7 @@ jobs:
 
   build:
     docker:
-      - image: circleci/node:14.16.0
+      - image: cimg/node:18.14.0
     working_directory: ~/starter-react-js
     steps:
       - restore_cache:
@@ -74,6 +76,8 @@ workflows:
       - test:
           requires:
             - install_dependencies
+          post-steps:
+            - codecov/upload
       - build:
           requires:
             - test

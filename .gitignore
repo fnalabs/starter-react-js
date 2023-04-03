@@ -1,6 +1,3 @@
-# Project specific
-dist
-
 # Logs
 logs
 *.log
@@ -15,17 +12,18 @@ pids
 coverage
 coverage.lcov
 
-# nyc test coverage
-.nyc_output
+# next.js
+/.next/
+/out/
+.env.local
 
-# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
+# production
+/build
+/public
 
-# node-waf configuration
-.lock-wscript
-
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
+# misc
+.DS_Store
+.vscode
 
 # Dependency directories
 node_modules
@@ -36,3 +34,19 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# next-pwa
+/public/precache.*.*.js
+/public/sw.js
+/public/workbox-*.js
+/public/worker-*.js
+/public/fallback-*.js
+/public/precache.*.*.js.map
+/public/sw.js.map
+/public/workbox-*.js.map
+/public/worker-*.js.map
+/public/fallback-*.js

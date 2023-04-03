@@ -3,32 +3,30 @@
 [![Code Coverage][codecov-image]][codecov-url]
 [![JavaScript Style Guide][style-image]][style-url]
 
-Starter kit for a universal PWA with React/Koa2.
+Starter kit for the upcoming changes in Next.js.
 
 ## Overview
 
-Overall, this starter kit provides the standard boilerplate constructs to develop and build a universal PWA. It uses the latest Babel, Webpack, and Jest/Enzyme. Some opinions have been made revolving around the inclusion of GDPR and GA tracking requirements. It has some configurable project settings with included \*rc/\*ignore files for:
+Overall, this starter kit provides the standard boilerplate constructs to develop and build a universal PWA with Next.js. It uses the latest: TypeScript, Docker, and Jest. Some opinions have been made revolving around the inclusion of GDPR and GA tracking requirements. It has some configurable project settings with included \*rc/\*ignore files for:
 
-- [Babel](https://babeljs.io/) ([.babelrc](./.babelrc) for import/export syntactic sugar and ES8+ support)
-- [Git](https://git-scm.com/) ([.gitignore](./.gitignore), pretty much the standard Node.js one provided by Github)
-- [Docker](https://www.docker.com/) ([.dockerignore](./.dockerignore), pretty much the .gitignore above with a few small changes)
+- [Docker](https://www.docker.com/) ([Dockerfile](./Dockerfile), [docker-compose.yml](./docker-compose.yml), and [.dockerignore](./.dockerignore))
+- [Next](https://beta.nextjs.org) ([next.config.js](./next.config.js))
+- [TypeScript](https://www.typescriptlang.org/) ([.tsconfig.json](./.tsconfig.json) and [.tsconfig.next.json](./.tsconfig.next.json))
 
-I have added support for badges. Currently, this project is integrated with [CircleCI](https://circleci.com/) and [Codecov](https://codecov.io/) to provide build and coverage badges respectively. I have also configured this project to track `dependencies` and `devDependencies` with [David-dm](https://david-dm.org/). All are free for open source projects and should be used to provide quick references to the projects status as well as a way to automatically test pull requests.
+I have added support for badges. Currently, this project is integrated with [CircleCI](https://circleci.com/) and [Codecov](https://codecov.io/) to provide build and coverage badges respectively. All are free for open source projects and should be used to provide quick references to the projects status as well as a way to automatically test pull requests.
 
 ## NPM
 
 The project provides an extensible build process integrated with npm scripts. The following is a breakdown of npm scripts provided and how to use them:
 
 - `npm run build` - to build production output.
-- `npm run build:dev` - to build development output.
-- `npm run coverage` - to report test coverage to Codecov.
-- `npm run dev` - to run two nodemon processes automatically based on watched files, one to rebuild application code and the other to run tests
-- `npm run fix` - to automatically apply JS Standard Style to all JS code
-- `npm run release` - to test and build production code
+- `npm run dev` - to start the application in a development environment.
+- `npm run fix` - to automatically apply TS Standard Style to all TS code.
+- `npm run lint` - to run TS Standard Style checks.
+- `npm run release` - to test and build production code.
 - `npm start` - to start the application in a production environment.
-- `npm run start:dev` - to start the application in a development environment.
-- `npm test` - to run JS Standard Style checks and CI unit tests
-- `npm run test:dev` - to run JS Standard Style checks and development unit tests
+- `npm test` - to run CI unit tests.
+- `npm run test:watch` - to run development unit tests.
 
 ## Docker
 
@@ -46,7 +44,7 @@ For development, it is strongly recommended to use `docker-compose` with the inc
 For production, builds are a multi-step process that is easily automated. Below is a short script to achieve this goal.
 
 ```shell
-docker build -t fnalabs/docker-pwa .
+docker build -t fnalabs/docker-next-pwa .
 ```
 
 [LICENSE](./LICENSE)

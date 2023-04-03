@@ -4,7 +4,7 @@
   "description": "Starter kit for universal React server-side rendering in Node.js w/ Koa2 implementations in Docker",
   "scripts": {
     "prebuild": "del .next out public",
-    "build": "cross-env NODE_ENV=production next build && cross-env NODE_ENV=production next export",
+    "build": "cross-env NODE_ENV=production next build",
     "predev": "del .next out public",
     "dev": "cross-env NODE_ENV=development next dev",
     "fix": "ts-standard --fix -p ./tsconfig.json",

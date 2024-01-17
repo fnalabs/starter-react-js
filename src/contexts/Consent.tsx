@@ -1,8 +1,9 @@
 'use client'
 
 import React, { FC, Dispatch, ReactNode, createContext, useContext, useReducer } from 'react'
+import { Cookies } from 'react-cookie-consent'
 
-export enum ConsentActionType { ACCEPTED, DECLINED }
+export enum ConsentActionType { DECLINED, ACCEPTED }
 export interface IConsentAction {
   type: ConsentActionType
 }
@@ -10,22 +11,27 @@ export interface IConsentProvider {
   children: ReactNode
 }
 
-const Consent = createContext(false)
+const getConsent = (): boolean => {
+  return (Cookies.get('CookieConsent') === 'true' || globalThis?.sessionStorage?.getItem('CookieConsent') === 'true')
+}
+
+const initialState = getConsent()
+const Consent = createContext(initialState)
 const ConsentDispatch = createContext(undefined as unknown as Dispatch<IConsentAction>)
 
-const consentReducer = (consent: boolean, action: IConsentAction): boolean => {
+export const consentReducer = (consent: boolean, action: IConsentAction): boolean => {
   switch (action.type) {
     case ConsentActionType.ACCEPTED:
       return true
     case ConsentActionType.DECLINED:
       return false
     default:
-      throw Error(`Unknown Consent action: "${action.type}"`)
+      throw Error(`Unknown Consent action: "${action.type as string}"`)
   }
 }
 
 export const ConsentProvider: FC<IConsentProvider> = ({ children }) => {
-  const [consent, dispatch] = useReducer(consentReducer, false)
+  const [consent, dispatch] = useReducer(consentReducer, initialState)
 
   return (
     <Consent.Provider value={consent}>

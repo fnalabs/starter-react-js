@@ -15,5 +15,5 @@ export const metadata = {
   }
 }
 
-const Home: FC = () => (<div>Homepage content</div>)
+const Home: FC<{}> = () => (<div>Homepage content</div>)
 export default Home

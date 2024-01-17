@@ -1,102 +1,48 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { cleanup, render } from '@testing-library/react'
-import Layout from '../../../src/app/layout'
-
-jest.mock('react-ga4')
 
 describe('<Layout />', () => {
   afterEach(cleanup)
 
-  it('should render Layout content correctly', () => {
+  beforeAll(() => {
+    jest.mock('react-ga4')
+    jest.mock('../../../src/components/common', () => ({
+      CookieConsent: () => (<div>Cookie Consent</div>),
+      ServiceWorker: () => (<div>Service Worker</div>)
+    }))
+    jest.mock('../../../src/contexts/Consent', () => ({
+      ConsentProvider: ({ children }: { children: ReactNode }) => <>{children}</>
+    }))
+  })
+
+  beforeEach(jest.resetModules)
+
+  it('should render Layout content for development and test correctly', async () => {
+    jest.doMock('../../../src/config', () => ({ IS_PROD: false }))
+    const { default: Layout } = await import('../../../src/app/layout')
+
     const { asFragment } = render(<Layout>test</Layout>)
     expect(asFragment()).toMatchInlineSnapshot(`
 <DocumentFragment>
-  <header>
-    <nav>
-      <a
-        href="/"
-      >
-        Home
-      </a>
-    </nav>
-  </header>
-  <main>
-    test
-  </main>
-  <footer>
-    <nav>
-      <h5>
-        Sitemap
-      </h5>
-      <div>
-        <a
-          href="/"
-        >
-          Home
-        </a>
-      </div>
-      <h5>
-        Policies
-      </h5>
-      <div>
-        <a
-          href="/cookie"
-        >
-          Cookie
-        </a>
-      </div>
-      <div>
-        <a
-          href="/privacy"
-        >
-          Privacy
-        </a>
-      </div>
-    </nav>
-  </footer>
-  <div
-    class="CookieConsent"
-    style="bottom: 0px;"
-  >
-    <div
-      class=""
-    >
-      We use cookies to provide you the best experience. By clicking 
-      <strong>
-        Accept
-      </strong>
-       you are agreeing to our 
-      <a
-        href="/cookie"
-      >
-        Cookie
-      </a>
-       and 
-      <a
-        href="/privacy"
-      >
-        Privacy
-      </a>
-       policies.
-    </div>
-    <div
-      class=""
-    >
-      <button
-        aria-label="Decline cookies"
-        class=""
-        id="rcc-decline-button"
-      >
-        Decline
-      </button>
-      <button
-        aria-label="Accept cookies"
-        class=""
-        id="rcc-confirm-button"
-      >
-        Accept
-      </button>
-    </div>
+  <div>
+    Cookie Consent
+  </div>
+</DocumentFragment>
+`)
+  })
+
+  it('should render Layout content for production correctly', async () => {
+    jest.doMock('../../../src/config', () => ({ IS_PROD: true }))
+    const { default: Layout } = await import('../../../src/app/layout')
+
+    const { asFragment } = render(<Layout>test</Layout>)
+    expect(asFragment()).toMatchInlineSnapshot(`
+<DocumentFragment>
+  <div>
+    Cookie Consent
+  </div>
+  <div>
+    Service Worker
   </div>
 </DocumentFragment>
 `)

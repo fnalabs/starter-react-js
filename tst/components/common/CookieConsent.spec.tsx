@@ -1,14 +1,33 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import { cleanup, render } from '@testing-library/react'
-import { CookieConsent } from '../../../src/components/common'
+import { cleanup, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { ConsentActionType } from '../../../src/contexts/Consent'
+import CookieConsent from '../../../src/components/common/CookieConsent'
 
+const mockDispatch = jest.fn()
 jest.mock('react-ga4')
+jest.mock('next/navigation', () => ({
+  usePathname: jest.fn().mockReturnValue('/')
+}))
+jest.mock('../../../src/contexts/Consent', () => ({
+  ConsentActionType: { DECLINED: 0, ACCEPTED: 1 },
+  useConsent: jest.fn().mockReturnValueOnce(true).mockReturnValue(false),
+  useConsentDispatch: () => mockDispatch
+}))
 
 describe('<CookieConsent />', () => {
   afterEach(cleanup)
 
-  // TODO write unit tests to cover accept and decline event handlers
+  it('should render all static content correctly', () => {
+    const { asFragment } = render(<CookieConsent>test content</CookieConsent>)
+    expect(asFragment()).toMatchInlineSnapshot(`
+<DocumentFragment>
+  test content
+</DocumentFragment>
+`)
+  })
+
   it('should render test content only', () => {
     const { asFragment } = render(<CookieConsent>test content</CookieConsent>)
     expect(asFragment()).toMatchInlineSnapshot(`
@@ -62,12 +81,22 @@ describe('<CookieConsent />', () => {
 `)
   })
 
-  it('should render all static content correctly', () => {
-    const { asFragment } = render(<CookieConsent isConsent>test content</CookieConsent>)
-    expect(asFragment()).toMatchInlineSnapshot(`
-<DocumentFragment>
-  test content
-</DocumentFragment>
-`)
+  it('should handleOnAccept successfully', async () => {
+    render(<CookieConsent>test content</CookieConsent>)
+
+    await userEvent.click(screen.getByText('Accept', { selector: 'button', exact: false }))
+
+    expect(mockDispatch).toHaveBeenCalledTimes(1)
+    expect(mockDispatch).toHaveBeenCalledWith({ type: ConsentActionType.ACCEPTED })
   })
+
+  // FIXME
+  // it('should handleOnDecline successfully', async () => {
+  //   render(<CookieConsent>test content</CookieConsent>)
+
+  //   await userEvent.click(screen.getByText('Decline', { selector: 'button', exact: false }))
+
+  //   expect(mockDispatch).toHaveBeenCalledTimes(1)
+  //   expect(mockDispatch).toHaveBeenCalledWith({ type: ConsentActionType.DECLINED })
+  // })
 })

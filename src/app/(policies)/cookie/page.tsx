@@ -16,7 +16,7 @@ export const metadata = {
   }
 }
 
-const Cookie: FC = () => (
+const Cookie: FC<{}> = () => (
   <article>
     {/* TODO: add site/company name and web address here */}
     <h1>Cookie Policy for `{meta.common.siteName}`</h1>

@@ -4,6 +4,7 @@ services:
     build:
       context: .
       target: development
+    container_name: webapp
 
     # NOTE: use 'image' for development
     image: webapp:development

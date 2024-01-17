@@ -16,7 +16,7 @@ export const metadata = {
   }
 }
 
-const Privacy: FC = () => (
+const Privacy: FC<{}> = () => (
   <article>
     {/* TODO: add site/company name, web address, and contact emails below */}
     <h1>Privacy Policy For `{meta.common.siteName}`</h1>

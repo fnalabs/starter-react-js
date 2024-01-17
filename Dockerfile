@@ -1,7 +1,6 @@
 # start with Alpine Linux Node for base image
-FROM node:18.14.0-alpine as base
+FROM node:20.10.0-alpine as base
 
-ARG APP_PATH="/opt/webapp"
 ARG PORT="3000"
 ENV PORT="${PORT}"
 
@@ -16,8 +15,8 @@ FROM base as development
 ARG NODE_ENV="development"
 ENV NODE_ENV="${NODE_ENV}"
 
-COPY . ${APP_PATH}/
-WORKDIR ${APP_PATH}
+COPY . /opt/webapp/
+WORKDIR /opt/webapp
 RUN npm ci --quiet --no-optional && \
     npm run release
 
@@ -25,20 +24,8 @@ EXPOSE ${PORT}
 ENTRYPOINT ["dumb-init", "--"]
 CMD ["npm", "run", "dev"]
 
-# start with base image for production
-FROM base as production
-
-ARG NODE_ENV="production"
-ENV NODE_ENV="${NODE_ENV}"
-
-COPY --from=development ${APP_PATH}/dist ${APP_PATH}/dist/
-COPY package.json package-lock.json LICENSE ${APP_PATH}/
-
-WORKDIR ${APP_PATH}
-RUN npm ci --quiet --no-optional --production && \
-    npm prune --production && \
-    npm cache clean --force
-
-EXPOSE ${PORT}
-ENTRYPOINT ["dumb-init", "--"]
-CMD ["npm", "start"]
+# start with development step for production
+FROM nginx:1.25.2-alpine
+COPY example.conf /etc/nginx/conf.d/default.conf
+COPY --from=development /opt/webapp/out /var/www/out
+COPY --from=development /opt/webapp/.next/sw.js /var/www/out

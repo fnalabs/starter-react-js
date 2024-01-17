@@ -12,7 +12,7 @@
     "release": "npm test && npm run build",
     "start": "NODE_ENV=production next start",
     "pretest": "del coverage",
-    "test": "cross-env NODE_ENV=test jest --ci --colors --coverage tst/",
+    "test": "cross-env NODE_ENV=test jest --ci --colors --coverage --runInBand tst/",
     "pretest:watch": "del coverage",
     "test:watch": "cross-env NODE_ENV=test jest --updateSnapshot --colors --coverage --watch tst/",
     "version": "npm run release"

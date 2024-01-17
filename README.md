@@ -45,6 +45,7 @@ For production, builds are a multi-step process that is easily automated. Below 
 
 ```shell
 docker build -t fnalabs/docker-next-pwa .
+docker run --name test -p 8080:80 fnalabs/docker-next-pwa
 ```
 
 [LICENSE](./LICENSE)

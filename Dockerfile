@@ -1,5 +1,5 @@
 # start with Alpine Linux Node for base image
-FROM node:20.10.0-alpine as base
+FROM node:20.11.0-alpine as base
 
 ARG PORT="3000"
 ENV PORT="${PORT}"
